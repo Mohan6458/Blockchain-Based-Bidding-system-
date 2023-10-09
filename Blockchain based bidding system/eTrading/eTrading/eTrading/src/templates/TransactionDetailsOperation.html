@@ -1,0 +1,93 @@
+
+    {% extends "Home.html" %}
+
+{% block content %}
+    <h2 class="heading">{{operation}}  Transaction Details</h2>
+    <form id="frm" name="frm" method="post" action="/ProcessTransactionDetailsOperation" enctype="multipart/form-data">
+               
+      
+         <input type="hidden" name="operation" value="{{ operation }}"/>
+         <input type="hidden" name="transactionDetailsID" value="{{ row.transactionDetailsID }}"/>
+
+        
+
+                                            <div class="form-group row">
+                                    <label for="transactionDetailsName" class="col-sm-3 col-form-label">Transactiondetailsname </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="transactionDetailsName" id="transactionDetailsName"  value="{{ row.transactionDetailsName }}" required {{'readonly' if operation == 'Delete'}} />
+                                    </div>
+                                </div>
+                                            
+                            <div class="form-group row">
+                                <label for="imageFile" class="col-sm-3 col-form-label">Imagefile </label>
+                                <div class="col-sm-5">
+                                    <input type="file" class="form-control" name="imageFile" id="imageFile"  value="{{ row.imageFile }}" {{'required' if operation == 'Create'}} {{'readonly' if operation == 'Delete'}} />
+                                    
+                                </div>
+                                <div class="col-sm-4 {{'d-none' if not operation == 'Edit' }}" >
+                                    <input type="hidden" name="himageFile" value="{{ row.imageFile }}" />
+                                    <a target="_blank" href="static/UPLOADED_FILES/{{ row.imageFile }}">{{ row.imageFile }}</a>
+                                </div>
+                            </div>
+                                                    
+                                            <div class="form-group row">
+                                    <label for="createdDate" class="col-sm-3 col-form-label">Createddate  </label>
+                                    <div class="col-sm-9">
+                                        <input type="datetime-local" class="form-control" name="createdDate" id="createdDate"  value="{{ row.createdDate }}" required {{ 'readonly' if operation == 'Delete' }} />
+                                    </div>
+                                </div>
+                                            
+                                            <div class="form-group row">
+                                    <label for="ipAddress" class="col-sm-3 col-form-label">Ipaddress </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="ipAddress" id="ipAddress"  value="{{ row.ipAddress }}" required {{'readonly' if operation == 'Delete'}} />
+                                    </div>
+                                </div>
+                                            
+            <div class="form-group row">
+                <label for="authorizedByID" class="col-sm-3 col-form-label">Authorizedbyid </label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="authorizedByID" name="authorizedByID" {{'disabled' if operation == 'Delete'}}>
+                        {% for dd_row in authorizedBy_list %}
+                            <option value="{{dd_row.authorizedByID}}">{{dd_row.authorizedByName}}</option>
+                
+                        {% endfor %}
+                    </select>                          
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="verifiedByID" class="col-sm-3 col-form-label">Verifiedbyid </label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="verifiedByID" name="verifiedByID" {{'disabled' if operation == 'Delete'}}>
+                        {% for dd_row in verifiedBy_list %}
+                            <option value="{{dd_row.verifiedByID}}">{{dd_row.verifiedByName}}</option>
+                
+                        {% endfor %}
+                    </select>                          
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="dataOwnerID" class="col-sm-3 col-form-label">Dataownerid </label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="dataOwnerID" name="dataOwnerID" {{'disabled' if operation == 'Delete'}}>
+                        {% for dd_row in dataOwner_list %}
+                            <option value="{{dd_row.dataOwnerID}}">{{dd_row.dataOwnerName}}</option>
+                
+                        {% endfor %}
+                    </select>                          
+                </div>
+            </div>
+            
+    
+		
+        <div class="text-center">
+                <button type="submit" class="btn btn-outline-primary btn-sm ">{{operation}}</button>
+                <a href="/TransactionDetailsListing" class="btn btn-outline-primary btn-sm ">Cancel</a>
+        </div>
+
+    </form>
+    
+{% endblock %}
+    
